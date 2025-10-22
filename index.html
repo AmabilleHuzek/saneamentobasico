@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatar Problema de Saneamento</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Relatar Problema de Saneamento</h1>
+    <form id="form">
+      <input name="problema" placeholder="Problema" required>
+      <input name="localizacao" placeholder="Localização" required>
+      <input name="solucao" placeholder="Solução proposta">
+      <input name="custo" type="number" placeholder="Custo estimado (R$)">
+      <input name="retorno" type="number" placeholder="Retorno estimado (R$)">
+      <input name="concorrente" placeholder="Concorrente">
+      <button type="submit">Enviar</button>
+    </form>
+
+    <h2>📌 Relatos enviados</h2>
+    <div id="lista"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const lista = document.getElementById('lista');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const dados = Object.fromEntries(new FormData(form));
+      const item = document.createElement('div');
+      item.className = 'card';
+      item.innerHTML = `
+        <h3>${dados.problema}</h3>
+        <p><strong>Localização:</strong> ${dados.localizacao}</p>
+        <p><strong>Solução:</strong> ${dados.solucao || 'Não informada'}</p>
+        <p><strong>Custo:</strong> R$${dados.custo || '0'} | <strong>Retorno:</strong> R$${dados.retorno || '0'}</p>
+        <p><strong>Concorrente:</strong> ${dados.concorrente || 'Nenhum'}</p>
+      `;
+      lista.prepend(item);
+      form.reset();
+    });
+  </script>
+</body>
+</html>
